@@ -1,7 +1,6 @@
 {
-  "name": "@ai-opensource-local/fixtureforge",
+  "name": "fixtureforge",
   "version": "0.2.0",
-  "private": true,
   "description": "Deterministic stateful ticket fixture for agent tests",
   "type": "module",
   "engines": {
@@ -18,7 +17,7 @@
   },
   "scripts": {
     "test": "node --test test/*.test.mjs",
-    "demo": "node src/cli.ts demo",
+    "demo": "node dist/cli.js demo",
     "typecheck": "tsc --noEmit",
     "build": "tsc -p tsconfig.build.json",
     "prepack": "npm run build",
@@ -41,5 +40,25 @@
     "SECURITY.md"
   ],
   "types": "./dist/index.d.ts",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Balaji91221/fixtureforge.git"
+  },
+  "homepage": "https://github.com/Balaji91221/fixtureforge#readme",
+  "bugs": {
+    "url": "https://github.com/Balaji91221/fixtureforge/issues"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "mcp",
+    "fixtures",
+    "testing",
+    "simulation"
+  ]
 }

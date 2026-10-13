@@ -1,12 +1,25 @@
 # FixtureForge usage guide
 
+**Package availability:** use the GitHub release tarball URL below. npm registry publication is pending; package imports and installed CLI names stay `fixtureforge`.
+
+
 [← Project overview](../README.md) · [Architecture](architecture.md)
 
 Run commands from the repository root unless a section says to use a consuming project.
 
 A deterministic, stateful ticket service for testing agents. Local development
-release **0.2.0**; not published to npm. Node.js 22.18+ supplies the built-in SQLite
+release **0.2.0**, packaged as `fixtureforge` for npm. Node.js 22.18+ supplies the built-in SQLite
 API; no runtime npm dependencies or live customer accounts are required.
+
+
+## Install the release package
+
+```bash
+npm install https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz
+npx fixtureforge demo
+```
+
+The package ships compiled ESM JavaScript and TypeScript declarations. The source-checkout recipes below assume you have cloned the repository; installed examples are also available under `node_modules/fixtureforge/examples/`.
 
 ## Install and run a reference task
 
@@ -28,17 +41,16 @@ never changes the verdict: predicates inspect stored tickets/events.
 For a consuming project, run `npm pack`, then install the generated local tarball:
 
 ```bash
-npm install /absolute/path/ai-opensource-local-fixtureforge-0.2.0.tgz
+npm install /absolute/path/fixtureforge-0.2.0.tgz
 ```
 
-The package contains compiled ESM JavaScript, declarations, examples and docs. Its
-`private` flag prevents accidental publication. Node SQLite can emit an experimental
+The package contains compiled ESM JavaScript, declarations, examples and docs. The CLI is available as `fixtureforge` after installation. Node SQLite can emit an experimental
 warning on supported older Node releases; stdout protocol/report data stays clean.
 
 ## SDK: isolated persistent environments
 
 ```ts
-import { EnvironmentManager } from '@ai-opensource-local/fixtureforge';
+import { EnvironmentManager } from 'fixtureforge';
 import { readFileSync } from 'node:fs';
 
 const manager = new EnvironmentManager('/tmp/my-fixture-runs');
@@ -192,5 +204,4 @@ Tests cover deterministic snapshots, SQL rollback, independent handles, versions
 namespace/actor isolation, reset/revocation, validated restore, cleanup, success and
 failure traces, diffs/reports, HTTP and actual stdio MCP subprocesses. There are no
 model calls: agent task success on this simplified simulator is separate from
-real-service competence. No public package, external pilot, hosted deployment, or
-production validation is claimed. See IMPLEMENTATION_STATUS.md and PROJECT_PLAN.md.
+real-service competence. No independent pilot, hosted deployment, or production validation is claimed. See IMPLEMENTATION_STATUS.md and PROJECT_PLAN.md.

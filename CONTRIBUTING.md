@@ -13,6 +13,5 @@ domain errors and credential scope. Never commit real tickets or credentials.
 
 Schema changes require versioning and non-destructive migration tests. Use the
 repository's Issues and Pull requests for contributions. Code is MIT licensed.
-Public GitHub source distribution is separate from npm registry publication;
-`private: true` prevents accidental npm publication, and no registry release is
-claimed.
+The public npm package is `fixtureforge`. Publish only through an explicit maintainer
+release after verifying the tarball and consumer examples.

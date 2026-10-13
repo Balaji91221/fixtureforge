@@ -2,7 +2,7 @@
 
 Stateful simulated services for agent testing.
 
-**Status:** Local 0.2.0 implementation complete for the first-release scope. See [current implementation status](IMPLEMENTATION_STATUS.md) and [usage instructions](README.md). Npm registry publication, external pilots and production validation remain open. **Planning date:** 13 October 2026. Package naming still requires public registry review before publication.
+**Status:** Local 0.2.0 implementation complete for the first-release scope. See [current implementation status](IMPLEMENTATION_STATUS.md) and [usage instructions](README.md). External pilots and production validation remain open. **Planning date:** 13 October 2026. The public npm package identity is `fixtureforge`.
 
 ## Goal and target users
 
@@ -80,7 +80,7 @@ When optional model calls are introduced, version prompts and output schemas, va
 
 ## Installation and integration design
 
-The local MIT-licensed package supplies these commands after installation from its tarball. No registry package is published. Owner operations read FIXTUREFORGE_OWNER_TOKEN; MCP reads FIXTUREFORGE_ACTOR_TOKEN.
+The MIT-licensed `fixtureforge` npm package supplies these commands after installation; local tarball installation is also supported. Owner operations read FIXTUREFORGE_OWNER_TOKEN; MCP reads FIXTUREFORGE_ACTOR_TOKEN.
 
 ```text
 fixtureforge start --scenario examples/scenarios/ticket-triage.json --dir /tmp/fixtures --run run-123
@@ -183,7 +183,7 @@ Node 22.18+ with built-in SQLite is the supported runtime; development dependenc
 | Installable SDK/CLI and release files | npm tarball, CI, security/contribution/license docs | Clean consuming-project SDK/CLI smoke checked locally |
 | React inspector | Optional later interface | Current visibility workflow uses HTML/JSON; decision 002 |
 | LLM scenario generation | Later optional feature | No runtime model business rules or model dependency |
-| Public registry release and independent pilot | External work | Not done; no claim of production or real-service competence |
+| Registry release and independent pilot | Release checks + external validation | Registry publishing is explicit; independent pilot and real-service competence are not claimed |
 
 The storage implementation uses an explicit StateStore interface with a serialized,
 validated snapshot in SQLite rather than separate relational ticket/event tables.

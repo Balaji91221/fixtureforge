@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/Balaji91221/fixtureforge/actions/workflows/ci.yml"><img src="https://github.com/Balaji91221/fixtureforge/actions/workflows/ci.yml/badge.svg" alt="GitHub Actions CI"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+  <a href="https://github.com/Balaji91221/fixtureforge/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
   <a href="#quick-start"><img src="https://img.shields.io/badge/Node.js-%3E%3D22.18-339933" alt="Node.js 22.18 or newer"></a>
   <a href="#usage"><img src="https://img.shields.io/badge/SDK-TypeScript-3178C6" alt="TypeScript SDK"></a>
   <a href="#mcp-server"><img src="https://img.shields.io/badge/MCP-stdio%20server-6750A4" alt="MCP stdio server"></a>
@@ -18,7 +18,7 @@
   <a href="#docs">Docs</a>
 </p>
 
-![FixtureForge workflow: load a scenario, let an agent act, and evaluate stored state](docs/assets/overview.svg)
+![FixtureForge workflow: load a scenario, let an agent act, and evaluate stored state](https://raw.githubusercontent.com/Balaji91221/fixtureforge/main/docs/assets/overview.svg)
 
 ## Why I built it
 
@@ -49,50 +49,42 @@ An agent says, “I assigned the payment issue to Bob and closed it.” A mock r
 
 ## Quick start
 
-Requires **Node.js 22.18+** for built-in SQLite. No model API key or live customer account is required.
+**Install from the GitHub release below.** The compiled package is ready to use; npm registry publication is pending.
+
+
+Requires **Node.js 22.18+** for built-in SQLite. Install in your Node project or an empty working directory. No model API key or live customer account is required.
 
 ```bash
-git clone https://github.com/Balaji91221/fixtureforge.git
-cd fixtureforge
-npm ci
-npm run build
+npm install https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz
 
 demo_root="$(mktemp -d)"
-node dist/cli.js run \
-  --scenario examples/scenarios/ticket-triage.json \
+npx fixtureforge run \
+  --scenario node_modules/fixtureforge/examples/scenarios/ticket-triage.json \
   --output "$demo_root/triage.html"
 ```
 
 Expected result: **`evaluation.verdict: "PASS"`**. The seeded payment ticket is renamed “Payment resolved,” assigned to Bob, and closed. Open the generated `triage.html` to inspect the state changes.
 
-![Formatted FixtureForge result from the local ticket-triage scenario](docs/assets/demo.png)
+![Formatted FixtureForge result from the local ticket-triage scenario](https://raw.githubusercontent.com/Balaji91221/fixtureforge/main/docs/assets/demo.png)
 
-*Formatted summary of the included reference trace, generated with the [documentation helper](docs/assets/README.md). This is a local fixture demonstration, not a live model performance result.*
+*Formatted summary of the included reference trace, generated with the [documentation helper](https://github.com/Balaji91221/fixtureforge/blob/main/docs/assets/README.md). This is a local fixture demonstration, not a live model performance result.*
 
 Try the intentionally impossible reopening scenario:
 
 ```bash
-node dist/cli.js run --scenario examples/scenarios/impossible.json
+npx fixtureforge run --scenario node_modules/fixtureforge/examples/scenarios/impossible.json
 ```
 
 Expected result: **`FAIL`**, exit 1. Invalid input or an infrastructure error exits 2; a passing task exits 0. An “impossible” label describes the fixture's intended test case, not a general proof of unsolvability.
 
 ## Usage
 
-### Install the SDK in another project
+### Use the installed SDK
 
-Version **0.2.0** is available as source and is **not published to npm**. Pack it locally, then install the compiled ESM package in your application.
-
-```bash
-# In this repository:
-npm pack
-
-# In your consuming project:
-npm install /absolute/path/to/ai-opensource-local-fixtureforge-0.2.0.tgz
-```
+The `fixtureforge` package contains compiled ESM JavaScript, TypeScript declarations, the CLI, and example scenarios. Save this as an `.mjs` file, or use a project with `"type": "module"`:
 
 ```js
-import { TicketEnvironment } from '@ai-opensource-local/fixtureforge';
+import { TicketEnvironment } from 'fixtureforge';
 
 const tickets = new TicketEnvironment({ alice: 'member' }, 'example');
 try {
@@ -105,68 +97,61 @@ try {
 }
 ```
 
-Use `EnvironmentManager` when runs need SQLite persistence and scoped credentials. The [usage guide](docs/usage.md) includes the persistent SDK, local HTTP API, snapshots, reset, restore, and evaluation recipes.
+Use `EnvironmentManager` when runs need SQLite persistence and scoped credentials. The [usage guide](https://github.com/Balaji91221/fixtureforge/blob/main/docs/usage.md) includes the persistent SDK, local HTTP API, snapshots, reset, restore, and evaluation recipes.
 
 ### MCP server
 
 Create a run first, retain its credentials privately, and set `FIXTUREFORGE_ACTOR_TOKEN` to that run's chosen actor token. Configure your MCP client to launch:
 
 ```bash
-node /absolute/path/to/fixtureforge/dist/cli.js mcp \
+npx --yes --package=https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz fixtureforge mcp \
   --dir /absolute/fixture-runs --run trial
 ```
 
 The six tools are `ticket_create`, `ticket_search`, `ticket_get`, `ticket_update`, `ticket_transition`, and `ticket_close`. For the triage fixture, `ticket_search({"query":"Payment"})` finds `triage-T1` when connected as Alice.
 
-The server binds one actor and namespace at startup. Tools cannot switch either or perform owner operations such as reset and destroy. Follow the [setup and credential guide](docs/usage.md#mcp-integration); the HTTP service is a separate interface, not an HTTP MCP transport.
+The server binds one actor and namespace at startup. Tools cannot switch either or perform owner operations such as reset and destroy. Follow the [setup and credential guide](https://github.com/Balaji91221/fixtureforge/blob/main/docs/usage.md#mcp-integration); the HTTP service is a separate interface, not an HTTP MCP transport.
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    Scenario[Scenario and task predicates] --> Manager[Environment manager]
-    SDK[SDK client] --> Domain[Ticket environment]
-    HTTP[Local HTTP API] --> Actor[Actor-bound client]
-    MCP[Stdio MCP server] --> Actor
-    Manager --> Actor
-    Actor --> Domain
-    Domain --> Store[Memory or SQLite store]
-    Store --> Snapshot[Validated snapshot and events]
-    Snapshot --> Evaluate[Deterministic evaluator]
-    Scenario --> Evaluate
-    Evaluate --> Report[JSON and HTML report]
-```
-
 | Component | Responsibility |
 | --- | --- |
-| [`src/domain.ts`](src/domain.ts) | Ticket rules, permissions, versions, time, and snapshot validation |
-| [`src/storage.ts`](src/storage.ts) | SQLite transactions, run ownership, credentials, and cleanup |
-| [`src/scenarios.ts`](src/scenarios.ts) | Scenario loading, task predicates, reference traces, and reports |
-| [`src/http.ts`](src/http.ts) | Local HTTP routes and bearer-credential handling |
-| [`src/mcp.ts`](src/mcp.ts) | Six tools bound to a single run and actor |
-| [`src/cli.ts`](src/cli.ts) | Composition of runs, services, and owner operations |
+| [`src/domain.ts`](https://github.com/Balaji91221/fixtureforge/blob/main/src/domain.ts) | Ticket rules, permissions, versions, time, and snapshot validation |
+| [`src/storage.ts`](https://github.com/Balaji91221/fixtureforge/blob/main/src/storage.ts) | SQLite transactions, run ownership, credentials, and cleanup |
+| [`src/scenarios.ts`](https://github.com/Balaji91221/fixtureforge/blob/main/src/scenarios.ts) | Scenario loading, task predicates, reference traces, and reports |
+| [`src/http.ts`](https://github.com/Balaji91221/fixtureforge/blob/main/src/http.ts) | Local HTTP routes and bearer-credential handling |
+| [`src/mcp.ts`](https://github.com/Balaji91221/fixtureforge/blob/main/src/mcp.ts) | Six tools bound to a single run and actor |
+| [`src/cli.ts`](https://github.com/Balaji91221/fixtureforge/blob/main/src/cli.ts) | Composition of runs, services, and owner operations |
 
-Read the [HLD and LLD](docs/architecture.md) for storage contracts, transaction boundaries, lifecycle rules, and design tradeoffs.
+Read the [HLD and LLD](https://github.com/Balaji91221/fixtureforge/blob/main/docs/architecture.md) for storage contracts, transaction boundaries, lifecycle rules, and design tradeoffs.
 
 ### Boundaries
 
 FixtureForge simulates a small ticket service. Passing its tasks does not establish competence on real services. The SQLite store serializes validated snapshots and is intended for local test workloads, not a hosted production backend.
 
-Credentials are excluded from canonical snapshots. Reset and restore rotate actor tokens; graceful transient shutdown cleans up its run, while crashes need explicit cleanup. The legacy `serve PORT` command is an insecure in-memory demo; use the documented credential-bound interfaces for agent tests. See [security guidance](SECURITY.md).
+Credentials are excluded from canonical snapshots. Reset and restore rotate actor tokens; graceful transient shutdown cleans up its run, while crashes need explicit cleanup. The legacy `serve PORT` command is an insecure in-memory demo; use the documented credential-bound interfaces for agent tests. See [security guidance](https://github.com/Balaji91221/fixtureforge/blob/main/SECURITY.md).
 
 ## Docs
 
 | Start here | Go deeper |
 | --- | --- |
-| [Usage and integration recipes](docs/usage.md) | [Architecture: HLD and LLD](docs/architecture.md) |
-| [Example scenarios](examples/scenarios) | [Persistence decisions](docs/decisions/002-persistence-and-scope.md) |
-| [Implementation and verification status](IMPLEMENTATION_STATUS.md) | [Original project plan](PROJECT_PLAN.md) |
+| [Usage and integration recipes](https://github.com/Balaji91221/fixtureforge/blob/main/docs/usage.md) | [Architecture: HLD and LLD](https://github.com/Balaji91221/fixtureforge/blob/main/docs/architecture.md) |
+| [Example scenarios](https://github.com/Balaji91221/fixtureforge/tree/main/examples/scenarios) | [Persistence decisions](https://github.com/Balaji91221/fixtureforge/blob/main/docs/decisions/002-persistence-and-scope.md) |
+| [Implementation and verification status](https://github.com/Balaji91221/fixtureforge/blob/main/IMPLEMENTATION_STATUS.md) | [Original project plan](https://github.com/Balaji91221/fixtureforge/blob/main/PROJECT_PLAN.md) |
+
+### Develop from source
 
 ```bash
+git clone https://github.com/Balaji91221/fixtureforge.git
+cd fixtureforge
+npm ci
 npm run typecheck
+npm run build
 npm test
 ```
 
+To test a local package, run `npm pack` and install `fixtureforge-0.2.0.tgz` in an empty consuming project. Publishing is a separate release action.
+
 Tests cover state transitions, version conflicts, namespace isolation, deterministic replay, restore validation, credential rotation, HTTP, MCP, and cleanup. The CI badge links to current hosted results.
 
-Contribute through [issues](https://github.com/Balaji91221/fixtureforge/issues) and pull requests after reading [CONTRIBUTING.md](CONTRIBUTING.md). Original code is available under the [MIT license](LICENSE).
+Contribute through [issues](https://github.com/Balaji91221/fixtureforge/issues) and pull requests after reading [CONTRIBUTING.md](https://github.com/Balaji91221/fixtureforge/blob/main/CONTRIBUTING.md). Original code is available under the [MIT license](https://github.com/Balaji91221/fixtureforge/blob/main/LICENSE).

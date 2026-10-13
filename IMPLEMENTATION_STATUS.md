@@ -1,9 +1,9 @@
 # FixtureForge implementation status
 
 Local development release **0.2.0**, 13 October 2026. First-release local scope is
-implemented. No npm publication, hosted deployment, independent pilot or production
-validation is claimed. Public GitHub source distribution is separate from npm
-registry publication; the package remains unpublished in that registry.
+implemented. No hosted deployment, independent pilot or production validation is
+claimed. The public npm package identity is `fixtureforge@0.2.0`; release checks
+validate the compiled tarball independently of the source checkout.
 
 ## Implemented
 
@@ -53,5 +53,9 @@ owner tokens. Shutdown cleanup requires graceful termination; SIGKILL/crashes ca
 leave files for explicit owner cleanup. Filesystem checks do not sandbox a hostile
 process with the same OS account. Historical schema 1 demo snapshots are rejected
 rather than guessed/migrated destructively. Close and copy databases before future
-migration. Dedicated published security-contact and registry-name checks remain
-external release preparation.
+migration. Registry releases retain the security-reporting route and require explicit
+maintainer publication after package checks.
+
+## Public distribution
+
+The compiled `fixtureforge@0.2.0` package is distributed as a [GitHub release tarball](https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz). npm registry publication is pending. Installing the public tarball with npm provides the same SDK and CLI.

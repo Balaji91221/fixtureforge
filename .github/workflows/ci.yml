@@ -16,10 +16,10 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
       - run: npm test
-      - run: npm pack --pack-destination /tmp
-      - run: |
-          mkdir /tmp/fixtureforge-consumer
-          cd /tmp/fixtureforge-consumer
+      - name: Clean install of compiled package
+        run: |
+          artifact=$(npm pack --json | node -e "let input='';process.stdin.on('data',c=>input+=c).on('end',()=>console.log(require('node:path').resolve(JSON.parse(input)[0].filename)))")
+          cd "$(mktemp -d)"
           npm init -y
-          npm install /tmp/ai-opensource-local-fixtureforge-0.2.0.tgz
-          node --input-type=module -e "import {runDemo} from '@ai-opensource-local/fixtureforge'; if(runDemo().tickets[0].status !== 'closed') process.exit(1)"
+          npm install "$artifact"
+          node --input-type=module -e "import {runDemo} from 'fixtureforge'; if(runDemo().tickets[0].status !== 'closed') process.exit(1)"
