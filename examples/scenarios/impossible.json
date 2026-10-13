@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "impossible-ticket",
+  "seed": "impossible",
+  "users": {"alice": "member"},
+  "tickets": [{"title": "Already closed", "ownerId": "alice", "status": "closed"}],
+  "task": {"id": "reopen", "predicates": [{"kind": "ticket", "id": "impossible-T1", "fields": {"status": "open"}}]},
+  "solvability": "intentionally-impossible",
+  "solution": [{"actor": "alice", "tool": "transition", "args": {"id": "impossible-T1", "status": "open", "expectedVersion": 2}}]
+}

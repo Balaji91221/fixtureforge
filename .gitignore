@@ -1,0 +1,19 @@
+node_modules/
+artifacts/
+*.log
+dist/
+*.tgz
+
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+credentials.json
+
+# Local credentials, machine metadata, and generated output
+.DS_Store
+.env
+.env.*
+!.env.example
+coverage/
+*.tsbuildinfo

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "ticket-triage",
+  "seed": "triage",
+  "users": {"alice": "member", "bob": "member", "admin": "admin"},
+  "tickets": [{"title": "Payment failed", "ownerId": "alice"}],
+  "task": {
+    "id": "resolve-payment",
+    "predicates": [
+      {"kind": "ticket_count", "equals": 1},
+      {"kind": "ticket", "id": "triage-T1", "fields": {"status": "closed", "assigneeId": "bob", "title": "Payment resolved"}},
+      {"kind": "no_duplicate_titles"}
+    ]
+  },
+  "solvability": "known-solution",
+  "solution": [
+    {"actor": "alice", "tool": "search", "args": {"query": "Payment"}},
+    {"actor": "alice", "tool": "update", "args": {"id": "triage-T1", "patch": {"assigneeId": "bob", "title": "Payment resolved"}, "expectedVersion": 1}},
+    {"actor": "bob", "tool": "close", "args": {"id": "triage-T1", "expectedVersion": 2}}
+  ]
+}
