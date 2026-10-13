@@ -135,7 +135,7 @@ Credentials are excluded from canonical snapshots. Reset and restore rotate acto
 | --- | --- |
 | [Usage and integration recipes](https://github.com/Balaji91221/fixtureforge/blob/main/docs/usage.md) | [Architecture: HLD and LLD](https://github.com/Balaji91221/fixtureforge/blob/main/docs/architecture.md) |
 | [Example scenarios](https://github.com/Balaji91221/fixtureforge/tree/main/examples/scenarios) | [Persistence decisions](https://github.com/Balaji91221/fixtureforge/blob/main/docs/decisions/002-persistence-and-scope.md) |
-| [Implementation and verification status](https://github.com/Balaji91221/fixtureforge/blob/main/IMPLEMENTATION_STATUS.md) | [Original project plan](https://github.com/Balaji91221/fixtureforge/blob/main/PROJECT_PLAN.md) |
+| [Implementation and verification status](https://github.com/Balaji91221/fixtureforge/blob/main/IMPLEMENTATION_STATUS.md) | [Contribution guide](https://github.com/Balaji91221/fixtureforge/blob/main/CONTRIBUTING.md) |
 
 ### Develop from source
 

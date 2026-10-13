@@ -201,4 +201,4 @@ Tests cover deterministic snapshots, SQL rollback, independent handles, versions
 namespace/actor isolation, reset/revocation, validated restore, cleanup, success and
 failure traces, diffs/reports, HTTP and actual stdio MCP subprocesses. There are no
 model calls: agent task success on this simplified simulator is separate from
-real-service competence. No independent pilot, hosted deployment, or production validation is claimed. See IMPLEMENTATION_STATUS.md and PROJECT_PLAN.md.
+real-service competence. No independent pilot, hosted deployment, or production validation is claimed. See [implementation status](../IMPLEMENTATION_STATUS.md) for supported scope and verification details.

@@ -22,7 +22,7 @@ validate the compiled tarball independently of the source checkout.
   override actor/run identity. MCP contains only six actor operations.
 - JSON/escaped HTML reports with task results, state diffs and event timelines.
 - MIT license, changelog, contribution/security guidance, CI build/test/pack/install
-  workflow, release plan matrix and architecture decision records.
+  workflow, implementation status and architecture decision records.
 
 ## Verification
 
