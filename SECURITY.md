@@ -23,6 +23,6 @@ Use [GitHub private vulnerability reporting](https://github.com/Balaji91221/fixt
 reproduction, and the expected and observed behavior. Do not post secrets,
 credentials, or sensitive exploit details in public issues.
 
-Security fixes target the latest development release (currently 0.2.0).
+Security fixes target the latest package release (currently 0.2.1).
 Older releases have no maintenance guarantee. No independent security
 audit or response-time guarantee is claimed.

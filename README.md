@@ -49,13 +49,11 @@ An agent says, “I assigned the payment issue to Bob and closed it.” A mock r
 
 ## Quick start
 
-**Install from the GitHub release below.** The compiled package is ready to use; npm registry publication is pending.
-
 
 Requires **Node.js 22.18+** for built-in SQLite. Install in your Node project or an empty working directory. No model API key or live customer account is required.
 
 ```bash
-npm install https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz
+npm install fixtureforge@0.2.1
 
 demo_root="$(mktemp -d)"
 npx fixtureforge run \
@@ -104,7 +102,7 @@ Use `EnvironmentManager` when runs need SQLite persistence and scoped credential
 Create a run first, retain its credentials privately, and set `FIXTUREFORGE_ACTOR_TOKEN` to that run's chosen actor token. Configure your MCP client to launch:
 
 ```bash
-npx --yes --package=https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz fixtureforge mcp \
+npx --yes fixtureforge@0.2.1 mcp \
   --dir /absolute/fixture-runs --run trial
 ```
 
@@ -150,7 +148,7 @@ npm run build
 npm test
 ```
 
-To test a local package, run `npm pack` and install `fixtureforge-0.2.0.tgz` in an empty consuming project. Publishing is a separate release action.
+To test a local package, run `npm pack` and install `fixtureforge-0.2.1.tgz` in an empty consuming project. Publishing is a separate release action.
 
 Tests cover state transitions, version conflicts, namespace isolation, deterministic replay, restore validation, credential rotation, HTTP, MCP, and cleanup. The CI badge links to current hosted results.
 

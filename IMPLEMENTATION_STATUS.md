@@ -1,8 +1,8 @@
 # FixtureForge implementation status
 
-Local development release **0.2.0**, 13 October 2026. First-release local scope is
+Package release **0.2.1**, 13 October 2026; runtime behavior is unchanged from 0.2.0. First-release local scope is
 implemented. No hosted deployment, independent pilot or production validation is
-claimed. The public npm package identity is `fixtureforge@0.2.0`; release checks
+claimed. The public npm package identity is `fixtureforge@0.2.1`; release checks
 validate the compiled tarball independently of the source checkout.
 
 ## Implemented
@@ -31,11 +31,11 @@ including **26 tests**. Run these commands after `npm ci` to reproduce the check
 Tests include real HTTP listeners, real stdio MCP, persistent state, namespace
 isolation, deterministic replay, invalid restores, rollback on serialization failure,
 credential rotation, and actual CLI SIGTERM/persist cleanup. A clean consuming
-project installs the packed 0.2.0 tarball and exercises SDK and CLI reference tasks.
+project installs the packed 0.2.1 tarball and exercises SDK and CLI reference tasks.
 The passing triage trace and intentionally impossible reopening trace are examples,
 not a measurement of real-world agent performance.
 
-CI is configured for Node 22.18 and 24; it has not yet been run on a hosted runner.
+CI is configured for Node 22.18 and 24; the README badge links to current hosted results.
 This release was reviewed locally for failure atomicity, restore correctness and
 permission boundaries. No claim of exhaustive review is made.
 
@@ -58,4 +58,4 @@ maintainer publication after package checks.
 
 ## Public distribution
 
-The compiled `fixtureforge@0.2.0` package is distributed as a [GitHub release tarball](https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz). npm registry publication is pending. Installing the public tarball with npm provides the same SDK and CLI.
+Install the compiled package with `npm install fixtureforge@0.2.1`. The earlier [GitHub v0.2.0 tarball](https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz) remains available for that version. SDK imports and CLI names are unchanged.

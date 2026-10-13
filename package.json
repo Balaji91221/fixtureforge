@@ -1,6 +1,6 @@
 {
   "name": "fixtureforge",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Deterministic stateful ticket fixture for agent tests",
   "type": "module",
   "engines": {

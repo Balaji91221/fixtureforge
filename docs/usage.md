@@ -1,21 +1,18 @@
 # FixtureForge usage guide
 
-**Package availability:** use the GitHub release tarball URL below. npm registry publication is pending; package imports and installed CLI names stay `fixtureforge`.
-
-
 [← Project overview](../README.md) · [Architecture](architecture.md)
 
 Run commands from the repository root unless a section says to use a consuming project.
 
-A deterministic, stateful ticket service for testing agents. Local development
-release **0.2.0**, packaged as `fixtureforge` for npm. Node.js 22.18+ supplies the built-in SQLite
+A deterministic, stateful ticket service for testing agents. Package
+release **0.2.1**, packaged as `fixtureforge` for npm. Node.js 22.18+ supplies the built-in SQLite
 API; no runtime npm dependencies or live customer accounts are required.
 
 
 ## Install the release package
 
 ```bash
-npm install https://github.com/Balaji91221/fixtureforge/releases/download/v0.2.0/fixtureforge-0.2.0.tgz
+npm install fixtureforge@0.2.1
 npx fixtureforge demo
 ```
 
@@ -41,7 +38,7 @@ never changes the verdict: predicates inspect stored tickets/events.
 For a consuming project, run `npm pack`, then install the generated local tarball:
 
 ```bash
-npm install /absolute/path/fixtureforge-0.2.0.tgz
+npm install /absolute/path/fixtureforge-0.2.1.tgz
 ```
 
 The package contains compiled ESM JavaScript, declarations, examples and docs. The CLI is available as `fixtureforge` after installation. Node SQLite can emit an experimental
@@ -184,7 +181,7 @@ Set `FIXTUREFORGE_ACTOR_TOKEN` to the chosen run's actor token and configure an 
 client to launch:
 
 ```bash
-fixtureforge mcp --dir /absolute/fixture-runs --run trial
+npx --yes fixtureforge@0.2.1 mcp --dir /absolute/fixture-runs --run trial
 ```
 
 `--actor-env NAME` selects a different credential variable. The server binds one run

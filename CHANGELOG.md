@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 — 2026-10-13
+
+- Updated npm installation and pinned MCP launch instructions.
+- Updated package and lockfile versions for the npm release.
+- Runtime behavior is unchanged from 0.2.0; existing GitHub 0.2.0 release assets remain available.
+
 ## 0.2.0 — local build, 2026-10-13
 
 - Added SQLite environment persistence, atomic mutations, owner/actor credentials,
