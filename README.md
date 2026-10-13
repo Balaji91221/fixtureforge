@@ -153,3 +153,7 @@ To test a local package, run `npm pack` and install `fixtureforge-0.2.1.tgz` in 
 Tests cover state transitions, version conflicts, namespace isolation, deterministic replay, restore validation, credential rotation, HTTP, MCP, and cleanup. The CI badge links to current hosted results.
 
 Contribute through [issues](https://github.com/Balaji91221/fixtureforge/issues) and pull requests after reading [CONTRIBUTING.md](https://github.com/Balaji91221/fixtureforge/blob/main/CONTRIBUTING.md). Original code is available under the [MIT license](https://github.com/Balaji91221/fixtureforge/blob/main/LICENSE).
+
+---
+
+Explore more of my work: [latest open-source tools](https://github.com/Balaji91221#latest-open-source-tools) · [recent projects](https://github.com/Balaji91221#recent-work).
