@@ -1,0 +1,20 @@
+SCENARIO        ticket-triage
+TASK            resolve-payment
+VERDICT         PASS
+
+REFERENCE ACTIONS
+alice           search
+alice           update
+bob             close
+
+TICKET STATE: BEFORE -> AFTER
+ID              triage-T1
+title           Payment failed -> Payment resolved
+assigneeId      unassigned -> bob
+status          open -> closed
+version         1 -> 3
+
+TASK PREDICATES
+PASS            ticket_count
+PASS            ticket
+PASS            no_duplicate_titles
